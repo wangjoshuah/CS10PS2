@@ -26,6 +26,12 @@ public class Sketch {
 	 */
 	public synchronized int container(int x, int y) {
 		// YOUR CODE HERE
+		for (int idx = shapes.size() - 1; idx >= 0; idx--) { //go through all indexes in the shapes arraylist from top to bottom
+			if (shapes.get(idx) != null && shapes.get(idx).contains(x, y)) { //if the shape exists, and contains the point,
+				return idx; //return the index where we are at and leave this container call
+			}
+		} 
+		return -1; //if no shapes contain the points or we don't have any shapes yet, return -1
 	}
 	
 	/**
@@ -34,6 +40,14 @@ public class Sketch {
 	 */
 	public synchronized void draw(Graphics g, int selected) {
 		// YOUR CODE HERE
+		for (int idx = 0; idx < shapes.size(); idx--) { //go through all indexes in the shapes arraylist from bottom up
+			if (shapes.get(idx) != null) { //if the shape exists
+				shapes.get(idx).draw(g); //draw the shape
+				if (idx == selected) { //if the shape is selected,
+					shapes.get(idx).border(g); //draw a border
+				}
+			}
+		}
 	}
 	
 	/**
