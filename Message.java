@@ -28,5 +28,7 @@ public class Message {
 	 */
 	public String toString() {
 		// YOUR CODE HERE
+		String returnString = new String();
+		return returnString;
 	}
 }
