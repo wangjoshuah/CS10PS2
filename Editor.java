@@ -160,9 +160,9 @@ public class Editor extends JFrame {
 				if (current != null) {
 					current.draw(g);
 				}
-				/*if (selected) {
+				if (selected != -1) {
 					current.border(g);
-				}*/
+				}
 			}
 		};
 		
@@ -174,12 +174,28 @@ public class Editor extends JFrame {
 				// In drawing mode, start a new object;
 				// in editing mode, set selected according to which object contains the point
 				// YOUR CODE HERE
-				repaint();
+				if(drawing && shape == "ellipse") {
+					current = new Ellipse(point.x, point.y, point.x, point.y, color);
+					repaint();
+				}
+				if(drawing && shape == "rectangle") {
+					current = new Rectangle(point.x, point.y, point.x, point.y, color);
+					repaint();
+				}
+				if(drawing && shape == "segment") {
+					current = new Segment(point.x, point.y, point.x, point.y, color);
+					repaint();
+				}
+				else if (current != null && current.contains(point.x, point.y)) {
+					//selected = ;
+					repaint();
+				}
 			}
 
 			public void mouseReleased(MouseEvent event) {
 				// Pass the update (added object or moved object) on to the server
 				// YOUR CODE HERE
+
 				repaint();
 			}
 		});		
@@ -189,6 +205,16 @@ public class Editor extends JFrame {
 				// In drawing mode, update the other corner of the object;
 				// in editing mode, move the object by the difference between the current point and the previous one
 				// YOUR CODE HERE
+				Point p2 = event.getPoint();
+				if (drawing) {
+					current.setCorners(point.x, point.y, p2.x, p2.y);
+					repaint();
+				}
+				else if (selected != -1) {
+					current.moveBy(p2.x - point.x, p2.y - point.y);
+					point = event.getPoint();
+					repaint();
+				}
 				repaint();
 			}				
 		});
