@@ -48,6 +48,12 @@ public class EditorCommunicator extends Thread {
 		try {
 			// Handle messages
 			// YOUR CODE HERE
+			// Open the socket with the server, and then the writer and reader
+			System.out.println("connecting...");
+			Socket sock = new Socket("localhost", 4242);
+			PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			System.out.println("...connected");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
