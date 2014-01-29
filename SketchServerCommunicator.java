@@ -36,9 +36,12 @@ public class SketchServerCommunicator extends Thread {
 
 			// Tell the client the current state of the world
 			// YOUR CODE HERE
+			System.out.println("get ready to start showing the world to them");
 			for (int index = 0; index < this.server.getSketch().size(); index ++) {
+				System.out.println("index # " + index);
 				Shape tmpShape = this.server.getSketch().get(index);
 				if (tmpShape != null) {
+					System.out.println("Send shape " + tmpShape.toString());
 					send("doAddAt " + tmpShape.toString() + " " + index);
 					System.out.println("shared a shape");
 				}
