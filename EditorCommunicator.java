@@ -40,7 +40,6 @@ public class EditorCommunicator extends Thread {
 	public void send(String msg) {
 		out.println(msg);
 	}
-
 	/**
 	 * Keeps listening for and handling (your code) messages from the server
 	 */
@@ -61,7 +60,30 @@ public class EditorCommunicator extends Thread {
 		finally {
 			System.out.println("server hung up");
 		}
-	}	
+		
+		
+	}
+
+		public void draw(Graphics g, int selected) {
+	}
+	public int container(int x, int y) {
+		return editor.getSketch().container(x, y);
+	}
+	public void doAddAt(int idx, Shape shape) {
+	}
+	public int doAddEnd(Shape shape) {
+		return editor.getSketch().doAddEnd(shape);
+	}
+	public void doRecolor(int idx, Color c) {
+	}
+	public void doMoveTo(int idx, int x1, int y1) {
+	}
+	public void doDelete(int idx) {
+	}
+	
+
+
+	
 
 	// Send editor requests to the server
 	// YOUR CODE HERE (methods for different requests)

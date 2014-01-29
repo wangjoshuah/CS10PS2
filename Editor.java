@@ -121,8 +121,7 @@ public class Editor extends JFrame {
 		deleteB.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				if (selected != -1) {
-					current = null;
-					selected = -1;
+					comm.doDelete(selected);
 					repaint();
 				}
 			}
@@ -133,7 +132,7 @@ public class Editor extends JFrame {
 		recolorB.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				if (selected != -1) {
-					current.color = color;
+					comm.doRecolor(selected, color);
 					repaint();
 				}
 			}
@@ -186,16 +185,18 @@ public class Editor extends JFrame {
 					current = new Segment(point.x, point.y, point.x, point.y, color);
 					repaint();
 				}
-				else if (current != null && current.contains(point.x, point.y)) {
-					//selected = ;
+				else if (current != null ) {
+					selected = comm.container(point.x, point.y);
+					System.out.println(selected);
 					repaint();
 				}
 			}
 
 			public void mouseReleased(MouseEvent event) {
 				// Pass the update (added object or moved object) on to the server
-				// YOUR CODE HERE
-
+				if (drawing) {
+					comm.doAddEnd(current);
+				}
 				repaint();
 			}
 		});		
@@ -211,11 +212,10 @@ public class Editor extends JFrame {
 					repaint();
 				}
 				else if (selected != -1) {
-					current.moveBy(p2.x - point.x, p2.y - point.y);
+					comm.doMoveTo(selected, p2.x - point.x, p2.y - point.y);
 					point = event.getPoint();
 					repaint();
 				}
-				repaint();
 			}				
 		});
 	}
