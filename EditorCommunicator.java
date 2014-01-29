@@ -82,7 +82,7 @@ public class EditorCommunicator extends Thread {
 	public void doAddAt(int idx, Shape shape) {
 	}
 	public void doAddEnd(Shape shape) {
-		send(shape.toString());
+		send("doAddEnd " + shape.toString() + " -1"); //action plus shape plus index
 	}
 	public void doRecolor(int idx, Color c) {
 	}
