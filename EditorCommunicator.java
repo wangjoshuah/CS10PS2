@@ -25,9 +25,8 @@ public class EditorCommunicator extends Thread {
 			System.out.println("connecting to " + serverIP + "...");
 			try {
 				sock = new Socket(serverIP, 4242);
-				Socket tmpsock = new Socket(serverIP, 4242);
 				out = new PrintWriter(sock.getOutputStream(), true);
-				in = new BufferedReader(new InputStreamReader(tmpsock.getInputStream()));
+				in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 				System.out.println("...connected");
 			}
 			catch (IOException e) {
