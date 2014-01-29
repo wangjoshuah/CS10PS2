@@ -50,7 +50,6 @@ public class EditorCommunicator extends Thread {
 			// YOUR CODE HERE
 			// Open the socket with the server, and then the writer and reader
 			System.out.println("connecting...");
-			sock = new Socket("localhost", 4242);
 			out = new PrintWriter(sock.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			System.out.println("...connected");
