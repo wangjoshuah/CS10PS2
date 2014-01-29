@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 
 public class Editor extends JFrame {	
-	private static String serverIP = "129.170.210.80";			// IP address of sketch server
+	private static String serverIP = "localhost";			// IP address of sketch server
 															// null for standalone;
 															// "localhost" for your own machine;
 															// or ask a friend for IP address
@@ -38,17 +38,17 @@ public class Editor extends JFrame {
 	private EditorCommunicator comm;			// communication with the sketch server
 
 	public Editor() {
-		super("Graphical Editor");
+		super("Graphical Editor"); // call super
 
-		sketch = new Sketch();
+		sketch = new Sketch(); //give us a sketch
 		
 		// Connect to server
-		if (serverIP == null) {
-			comm = new EditorCommunicatorStandalone(this);
+		if (serverIP == null) { //if we don't have a server address,
+			comm = new EditorCommunicatorStandalone(this); //then we are working around it with standalone
 		}
-		else {
-			comm = new EditorCommunicator(serverIP, this);
-			comm.start();
+		else { //otherwise given a server,
+			comm = new EditorCommunicator(serverIP, this); //create a new editorcomm that will connect to that server using this editor
+			comm.start(); //start the communicator
 		}
 
 		// Helpers to create the canvas and GUI (buttons, etc.)
@@ -56,7 +56,7 @@ public class Editor extends JFrame {
 		setupGUI();
 
 		// Put the buttons and canvas together into the window
-		Container cp = getContentPane();
+		Container cp = getContentPane(); //glad to have this premade
 		cp.setLayout(new BorderLayout());
 		cp.add(canvas, BorderLayout.CENTER);
 		cp.add(gui, BorderLayout.NORTH);
@@ -76,8 +76,9 @@ public class Editor extends JFrame {
 		JToggleButton drawingB = new JToggleButton("drawing", drawing);
 		drawingB.addActionListener(new AbstractAction("drawing") {
 			public void actionPerformed(ActionEvent e) {
-				drawing = !drawing;
-				current = null;
+				drawing = !drawing; //if we hit the drawing button, we just flip whether we are drawing
+				current = null; //release our hold on the last image
+				selected = -1; //unselect whatever we had previously selected
 			}
 		});
 
@@ -86,7 +87,7 @@ public class Editor extends JFrame {
 		JComboBox shapeB = new JComboBox(shapes);
 		shapeB.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				shape = (String)((JComboBox)e.getSource()).getSelectedItem();
+				shape = (String)((JComboBox)e.getSource()).getSelectedItem(); //select the item and retain it as our shape type in the dropdown menu
 			}
 		});
 
@@ -94,14 +95,14 @@ public class Editor extends JFrame {
 		// Following Oracle example
 		JButton chooseColorB = new JButton("choose color");
 		colorChooser = new JColorChooser();
-		colorDialog = JColorChooser.createDialog(chooseColorB,
+		colorDialog = JColorChooser.createDialog(chooseColorB, //is this the popup?
 				"Pick a Color",
 				true,  //modal
 				colorChooser,
 				new AbstractAction() { 
 			public void actionPerformed(ActionEvent e) {
-				color = colorChooser.getColor();
-				colorL.setBackground(color); 
+				color = colorChooser.getColor(); //get the color from the colorChooser
+				colorL.setBackground(color);  //and set that as our retained background color
 			} 
 		}, //OK button
 		null); //no CANCEL button handler
@@ -121,9 +122,9 @@ public class Editor extends JFrame {
 		deleteB.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				if (current != null && selected != -1) {
-					comm.doDelete(selected);
-					current = null;
-					selected = -1;
+					comm.doDelete(selected); //tell the server we wanted to delete this
+					current = null; //release it and let it be garbage collected so it isn't retained in our local editor
+					selected = -1;//we aren't selecting anything so change the selected index
 					repaint();
 				}
 			}
@@ -133,9 +134,8 @@ public class Editor extends JFrame {
 		JButton recolorB = new JButton("recolor");
 		recolorB.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				if (selected != -1) {
-					comm.doRecolor(selected, color);
-					//repaint();
+				if (selected != -1) { //if we have selected something
+					comm.doRecolor(selected, color); //ask the server to repaint this selected image when we click the recolor button
 				}
 			}
 		});
@@ -173,32 +173,34 @@ public class Editor extends JFrame {
 				// In drawing mode, start a new object;
 				// in editing mode, set selected according to which object contains the point
 				// YOUR CODE HERE
-				if(drawing) {
+				selected = -1; //reset selected when we click our mouse
+				if(drawing) { //if we are in drawing mode,
 					if (shape.equals("ellipse")) { //If the string in the combo box is equal to "eclipse, set current as a new ellipse
-						current = new Ellipse(point.x, point.y, point.x, point.y, color);
+						current = new Ellipse(point.x, point.y, point.x, point.y, color); //create a new ellipse
 					}
 					else if (shape.equals("rectangle")) { //Same as above with rectangle
-						current = new Rectangle(point.x, point.y, point.x, point.y, color);
+						current = new Rectangle(point.x, point.y, point.x, point.y, color); //create a new rectangle
 					}
 					else if (shape.equals("segment")) { //Same as above with line segment
-						current = new Segment(point.x, point.y, point.x, point.y, color);
+						current = new Segment(point.x, point.y, point.x, point.y, color); //construct the segment
 					}
-					repaint();
 				}
-				selected = sketch.container(point.x, point.y); //Sets selected if the current point is in the boundaries of an object
-				if(!drawing && selected != -1) { //If selected is not -1, set current as the index of that object
-					current = sketch.get(selected);
+				else { //if we aren't drawing (in selection mode)
+					selected = sketch.container(point.x, point.y); //Sets selected if the current point is in the boundaries of an object
+					if (selected != -1) { //if something is selected
+						current = sketch.get(selected); //make that our current shape
+					}
 				}
-				repaint();
+				repaint(); //repaint the canvas every time the mouse is pressed
 			}
 
 			public void mouseReleased(MouseEvent event) {
 				// Pass the update (added object or moved object) on to the server
-				if (drawing) {
-					comm.doAddEnd(current);
+				if (drawing) { //if we are drawing,
+					comm.doAddEnd(current); //add the shape at the end to our server
 				}
-				else if (selected != -1) {
-					comm.doMoveTo(selected, current.x1, current.y1);
+				else if (selected != -1) { //if we are not drawing and we did select something,
+					comm.doMoveTo(selected, current.x1, current.y1); //move the object because we 
 				}
 			}
 		});		
@@ -211,12 +213,12 @@ public class Editor extends JFrame {
 				Point p2 = event.getPoint();
 				if (drawing) { //If drawing is true
 					current.setCorners(point.x, point.y, p2.x, p2.y); //set the boundary box of the Shape
-					repaint();
+					repaint(); //show how large t is
 				}
 				else if (selected != -1) { //If drawing is not true and selected is not -1
 					current.moveBy(p2.x - point.x, p2.y - point.y); //Move the object
-					point = event.getPoint();
-					repaint();
+					point = event.getPoint(); //get a new point
+					repaint(); //repaint while moving it
 				}
 			}				
 		});
@@ -227,13 +229,13 @@ public class Editor extends JFrame {
 	 * @return
 	 */
 	public Sketch getSketch() {
-		return sketch;
+		return sketch; //for use in the future, protects a private variable
 	}
 	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new Editor();
+				new Editor(); //let's go!
 			}
 		});	
 	}
