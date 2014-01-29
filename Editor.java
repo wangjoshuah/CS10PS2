@@ -184,9 +184,11 @@ public class Editor extends JFrame {
 					}
 					repaint();
 				}
-				else if (current != null ) {
-					selected = comm.container(point.x, point.y);
-					System.out.println(selected);
+				else (current != null ) {
+					selected = sketch.container(point.x, point.y);
+					if(selected != -1) {
+						current = sketch.get(selected);
+					}
 					repaint();
 				}
 			}
@@ -210,7 +212,7 @@ public class Editor extends JFrame {
 					repaint();
 				}
 				else if (selected != -1) {
-					comm.doMoveTo(selected, p2.x - point.x, p2.y - point.y);
+					current.moveBy(p2.x - point.x, p2.y - point.y);
 					point = event.getPoint();
 					repaint();
 				}
