@@ -70,17 +70,7 @@ public class EditorCommunicator extends Thread {
 		finally {
 			System.out.println("server hung up");
 		}
-		
-<<<<<<< HEAD
-//		try{
-//			out.close();
-//			in.close();
-//		}
-//		catch (IOException e) {
-//			e.printStackTrace();
-//		}
-=======
->>>>>>> 0625a9247ee467b077a940bd32ca596f4b21fbb9
+
 		
 	}
 
@@ -92,13 +82,13 @@ public class EditorCommunicator extends Thread {
 		send("doAddEnd " + shape.toString() + " -1"); //action plus shape plus index
 	}
 	public void doRecolor(int idx, Color c) {
-		send("doRecolor " + "NoShape " + "0 0 0 0 " + c.toString() + " " + Integer.toString(idx)); 
+		send("doRecolor " + editor.getSketch().get(idx).toString() + " " + c.hashCode() + " " + Integer.toString(idx)); 
 	}
 	public void doMoveTo(int idx, int x1, int y1) {
-		send("doMoveTo " + "NoShape " + Integer.toString(x1) + " " + Integer.toString(y1) + " 0 0 NoColor " + Integer.toString(idx));
+		send("doMoveTo " + editor.getSketch().get(idx).toString() + " " + Integer.toString(idx));
 	}
 	public void doDelete(int idx) {
-		send("doDelete " + "NoShape 0 0 0 0 NoColor "+ Integer.toString(idx));
+		send("doDelete " + editor.getSketch().get(idx).toString() + " "+ Integer.toString(idx));
 	}
 
 	

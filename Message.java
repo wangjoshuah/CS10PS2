@@ -33,8 +33,8 @@ public class Message {
 		int y1 = Integer.parseInt(tokens[3]);
 		int x2 = Integer.parseInt(tokens[4]);
 		int y2 = Integer.parseInt(tokens[5]);
-		Color c = Color.decode(tokens[6]);
-		index = Integer.parseInt(tokens[7]);
+		Color c = Color.decode(tokens[tokens.length - 2]);
+		index = Integer.parseInt(tokens[tokens.length - 1]);
 		
 		switch (action) {
 		case "doAddEnd": //coming from client we want to add a shape at the end
