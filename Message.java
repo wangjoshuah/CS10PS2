@@ -23,6 +23,8 @@ public class Message {
 	 */
 	public void update(Sketch sketch) {
 		// YOUR CODE HERE
+		if (constructorString.equals("Setup New User")) {
+		}
 	}
 
 	/**
@@ -30,7 +32,6 @@ public class Message {
 	 */
 	public String toString() {
 		// YOUR CODE HERE
-		String returnString = new String();
-		return returnString;
+		return constructorString;
 	}
 }
