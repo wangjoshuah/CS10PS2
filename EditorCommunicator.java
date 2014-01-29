@@ -45,6 +45,7 @@ public class EditorCommunicator extends Thread {
 	 */
 	public void run() {
 		try {
+			System.out.println("just keep trying");
 			// Handle messages
 			// YOUR CODE HERE
 			// Open the socket with the server, and then the writer and reader
@@ -71,6 +72,13 @@ public class EditorCommunicator extends Thread {
 			System.out.println("server hung up");
 		}
 		
+		try{
+			out.close();
+			in.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

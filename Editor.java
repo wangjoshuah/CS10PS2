@@ -161,7 +161,7 @@ public class Editor extends JFrame {
 				if (current != null) {
 					current.draw(g);
 				}
-				sketch.draw(g, selected);				
+				comm.run();				
 			}
 		};
 		
