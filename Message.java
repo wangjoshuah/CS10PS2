@@ -82,16 +82,11 @@ public class Message {
 		case "ellipse":
 			Ellipse ellipse = new Ellipse(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Color.decode(tokens[5]));
 			if (tokens[7].equals("-1")) { //if we are coming from the client side, they don't assign an index
-				System.out.println("from client to server");
 				index = sketch.doAddEnd(ellipse); //we add it on the end for the server
 			}
 			else { //or if it has an index
-				System.out.println("from server to client");
 				sketch.doAddAt(Integer.parseInt(tokens[7]), ellipse); //we add it in at the index for the client side
 			}
-			break;
-
-		default:
 			break;
 		}
 	}
