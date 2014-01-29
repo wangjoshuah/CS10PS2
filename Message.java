@@ -6,6 +6,7 @@ import java.awt.Color;
 public class Message {
 	// Instance variables
 	// YOUR CODE HERE
+	String constructorString; //the string that started it all
 	
 	/**
 	 * Initializes it from a string representation used for communication
@@ -13,6 +14,7 @@ public class Message {
 	 */
 	public Message(String msg) {
 		// YOUR CODE HERE
+		constructorString = msg;
 	}
 	
 	/**

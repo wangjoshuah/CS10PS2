@@ -53,6 +53,14 @@ public class EditorCommunicator extends Thread {
 			PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			System.out.println("...connected");
+			
+			
+			//Set message handler
+			String line;
+			while ((line = in.readLine()) != null) {
+				Message msg = new Message(line);
+				msg.update(editor.getSketch());
+			}
 		}
 		catch (IOException e) {
 			e.printStackTrace();
