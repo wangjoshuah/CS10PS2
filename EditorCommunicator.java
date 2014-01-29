@@ -64,7 +64,7 @@ public class EditorCommunicator extends Thread {
 		
 	}
 
-		public void draw(Graphics g, int selected) {
+	public void draw(Graphics g, int selected) {
 	}
 	public int container(int x, int y) {
 		return editor.getSketch().container(x, y);

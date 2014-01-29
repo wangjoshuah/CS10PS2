@@ -184,13 +184,11 @@ public class Editor extends JFrame {
 					}
 					repaint();
 				}
-				else (current != null ) {
 					selected = sketch.container(point.x, point.y);
 					if(selected != -1) {
 						current = sketch.get(selected);
 					}
 					repaint();
-				}
 			}
 
 			public void mouseReleased(MouseEvent event) {
