@@ -40,7 +40,8 @@ public class Sketch {
 	 */
 	public synchronized void draw(Graphics g, int selected) {
 		// YOUR CODE HERE
-		for (int idx = 0; idx < shapes.size(); idx--) { //go through all indexes in the shapes arraylist from bottom up
+		System.out.println("draw looper");
+		for (int idx = 0; idx < shapes.size(); idx++) { //go through all indexes in the shapes arraylist from bottom up
 			if (shapes.get(idx) != null) { //if the shape exists
 				shapes.get(idx).draw(g); //draw the shape
 				if (idx == selected) { //if the shape is selected,

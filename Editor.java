@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 
 public class Editor extends JFrame {	
-	private static String serverIP = "localhost";			// IP address of sketch server
+	private static String serverIP = null;			// IP address of sketch server
 															// null for standalone;
 															// "localhost" for your own machine;
 															// or ask a friend for IP address
@@ -158,9 +158,7 @@ public class Editor extends JFrame {
 				// Also display the object currently being drawn in this editor (not yet part of the sketch)
 				if (current != null) {
 					current.draw(g);
-				}
-				if (selected != -1) {
-					current.border(g);
+					comm.draw(g, selected);
 				}
 			}
 		};
@@ -197,7 +195,6 @@ public class Editor extends JFrame {
 				if (drawing) {
 					comm.doAddEnd(current);
 				}
-				repaint();
 			}
 		});		
 

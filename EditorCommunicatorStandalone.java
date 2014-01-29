@@ -15,6 +15,7 @@ public class EditorCommunicatorStandalone extends EditorCommunicator  {
 
 	
 	public void draw(Graphics g, int selected) {
+		System.out.println("editor called draw");
 		editor.getSketch().draw(g, selected);
 	}
 	public int container(int x, int y) { //

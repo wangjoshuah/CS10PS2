@@ -80,6 +80,7 @@ public class EditorCommunicator extends Thread {
 	}
 	public void doDelete(int idx) {
 	}
+
 	
 
 
