@@ -28,33 +28,33 @@ public class SketchServer {
 	 */
 	public void getConnections() throws IOException {
 		while (true) {
-			SketchServerCommunicator comm = new SketchServerCommunicator(listen.accept(), this);
-			comm.setDaemon(true);
-			comm.start();
-			addCommunicator(comm);
+			SketchServerCommunicator comm = new SketchServerCommunicator(listen.accept(), this); //server start listening
+			comm.setDaemon(true); //thread ends when communicator's disconnected
+			comm.start(); //start the communicator
+			addCommunicator(comm); //add the communicator to the array we are keeping
 		}
 	}
 
 	/**
 	 * Adds the communicator to the list of current communicators
 	 */
-	public synchronized void addCommunicator(SketchServerCommunicator comm) {
-		comms.add(comm);
+	public synchronized void addCommunicator(SketchServerCommunicator comm) { //when we get a new connection,
+		comms.add(comm); //add a communicator
 	}
 
 	/**
 	 * Removes the communicator from the list of current communicators
 	 */
-	public synchronized void removeCommunicator(SketchServerCommunicator comm) {
-		comms.remove(comm);
+	public synchronized void removeCommunicator(SketchServerCommunicator comm) { //delete an editor when it closes
+		comms.remove(comm); //removes the line to that editor
 	}
 
 	/**
 	 * Sends the message from the one communicator to all (including the originator)
 	 */
 	public synchronized void broadcast(String msg) {
-		for (SketchServerCommunicator comm : comms) {
-			comm.send(msg);
+		for (SketchServerCommunicator comm : comms) { //for all registered comms
+			comm.send(msg); //send the same message we just got
 		}
 	}
 	

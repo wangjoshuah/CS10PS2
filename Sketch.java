@@ -8,23 +8,23 @@ import java.awt.*;
 public class Sketch {
 	private ArrayList<Shape> shapes;
 
-	public Sketch() {
-		shapes = new ArrayList<Shape>();
+	public Sketch() { // constructor
+		shapes = new ArrayList<Shape>(); //new generic ArrayList of Shapes
 	}
 	
-	public synchronized int size() {
-		return shapes.size();
+	public synchronized int size() { //if they want to know our size,
+		return shapes.size(); //size
 	}
 	
-	public synchronized Shape get(int idx) {
-		return shapes.get(idx);
+	public synchronized Shape get(int idx) { //if they want to get a shape
+		return shapes.get(idx); //sync it up
 	}
 	
 	/**
 	 * Returns the index of the topmost shape containing the point, 
 	 * or -1 if it's not in any shape
 	 */
-	public synchronized int container(int x, int y) {
+	public synchronized int container(int x, int y) { 
 		// YOUR CODE HERE
 		for (int idx = shapes.size() - 1; idx >= 0; idx--) { //go through all indexes in the shapes arraylist from top to bottom
 			if (shapes.get(idx) != null && shapes.get(idx).contains(x, y)) { //if the shape exists, and contains the point,
@@ -56,36 +56,36 @@ public class Sketch {
 	public synchronized void doAddAt(int idx, Shape shape) {
 		// Add holes up to the point where the shape is supposed to go
 		while (shapes.size() <= idx) shapes.add(null);
-		shapes.set(idx, shape);
+		shapes.set(idx, shape); //create our shape and add it
 	}
 	
 	/**
 	 * Adds the shape to the sketch at the end of the list and returns its index
 	 */
 	public synchronized int doAddEnd(Shape shape) {
-		shapes.add(shape);
-		return shapes.size()-1;
+		shapes.add(shape); //add it at the end of the AL
+		return shapes.size()-1; //return the index where it is at
 	}
 	
 	/**
 	 * Deletes a shape by making its position in the sketch list null
 	 * @param idx
 	 */
-	public synchronized void doDelete(int idx) {
-		if (idx != -1) shapes.set(idx, null);
+	public synchronized void doDelete(int idx) { //delete index
+		if (idx != -1) shapes.set(idx, null); //if not (unselected) then actually delete it
 	}
 	
 	/**
 	 * Sets the shape of the given index to the given color
 	 */
-	public synchronized void doRecolor(int idx, Color c) {
-		shapes.get(idx).color = c;
+	public synchronized void doRecolor(int idx, Color c) { //set the color of an object
+		shapes.get(idx).color = c; //by getting the shape at index (if it exists) and apply oclor
 	}
 	
 	/**
 	 * Moves the shape of the given index by the given step
 	 */
-	public synchronized void doMoveTo(int idx, int x1, int y1) {	
-		shapes.get(idx).moveTo(x1, y1);
+	public synchronized void doMoveTo(int idx, int x1, int y1) { //if we want to drag and move	
+		shapes.get(idx).moveTo(x1, y1); //ask the server if it can end up there.
 	}	
 }

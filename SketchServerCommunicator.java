@@ -36,28 +36,21 @@ public class SketchServerCommunicator extends Thread {
 
 			// Tell the client the current state of the world
 			// YOUR CODE HERE
-			System.out.println("get ready to start showing the world to them");
-			for (int index = 0; index < this.server.getSketch().size(); index ++) {
-				System.out.println("index # " + index);
-				Shape tmpShape = this.server.getSketch().get(index);
-				if (tmpShape != null) {
-					System.out.println("Send shape " + tmpShape.toString());
-					send("doAddAt " + tmpShape.toString() + " " + index);
-					System.out.println("shared a shape");
+			for (int index = 0; index < this.server.getSketch().size(); index ++) { //for all shapes in the array
+				Shape tmpShape = this.server.getSketch().get(index); //get the shape
+				if (tmpShape != null) { //if the shape exists
+					send("doAddAt " + tmpShape.toString() + " " + index); //communicate that shape to the new editor
 				}
 			}
 
 			// Keep getting and handling messages from the client
 			// YOUR CODE HERE
-			String line;
-			while( (line = in.readLine()) != null) {
-				System.out.println("stuck in while loop");
-				Message msg = new Message(line);
-				msg.update(server.getSketch());
-				server.broadcast(msg.toString());
-				// Broadcast the latest change to all clients.
+			String line; //allocate memory for line
+			while( (line = in.readLine()) != null) { //while we are receiving a line,
+				Message msg = new Message(line); //create a message with the line
+				msg.update(server.getSketch()); //update the sketch according to the message
+				server.broadcast(msg.toString()); // Broadcast the latest change to all clients.
 			}
-			System.out.println("exited while loop");
 
 			// Clean up -- note that also remove self from server's list so it doesn't broadcast here
 			server.removeCommunicator(this);
