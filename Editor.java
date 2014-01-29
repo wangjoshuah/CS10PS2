@@ -121,8 +121,10 @@ public class Editor extends JFrame {
 		JButton deleteB = new JButton("delete");
 		deleteB.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				if (selected != -1) {
+				if (current != null && selected != -1) {
 					comm.doDelete(selected);
+					current = null;
+					selected = -1;
 					repaint();
 				}
 			}
@@ -134,7 +136,7 @@ public class Editor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (selected != -1) {
 					comm.doRecolor(selected, color);
-					repaint();
+					//repaint();
 				}
 			}
 		});
@@ -159,8 +161,8 @@ public class Editor extends JFrame {
 				// Also display the object currently being drawn in this editor (not yet part of the sketch)
 				if (current != null) {
 					current.draw(g);
-					comm.draw(g, selected);
 				}
+				sketch.draw(g, selected);
 			}
 		};
 		
@@ -185,7 +187,7 @@ public class Editor extends JFrame {
 					repaint();
 				}
 				selected = sketch.container(point.x, point.y); //Sets selected if the current point is in the boundaries of an object
-				if(selected != -1) { //If selected is not -1, set current as the index of that object
+				if(!drawing && selected != -1) { //If selected is not -1, set current as the index of that object
 					current = sketch.get(selected);
 				}
 				repaint();

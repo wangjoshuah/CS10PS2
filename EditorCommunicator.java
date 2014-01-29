@@ -60,6 +60,7 @@ public class EditorCommunicator extends Thread {
 			while ((line = in.readLine()) != null) {
 				Message msg = new Message(line);
 				msg.update(editor.getSketch());
+				
 			}
 		}
 		catch (IOException e) {
@@ -72,11 +73,7 @@ public class EditorCommunicator extends Thread {
 		
 	}
 
-	public void draw(Graphics g, int selected) {
-	}
-	public int container(int x, int y) {
-		return editor.getSketch().container(x, y);
-	}
+
 	public void doAddAt(int idx, Shape shape) {
 	}
 	public int doAddEnd(Shape shape) {
