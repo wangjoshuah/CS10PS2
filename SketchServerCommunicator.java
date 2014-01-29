@@ -36,6 +36,13 @@ public class SketchServerCommunicator extends Thread {
 
 			// Tell the client the current state of the world
 			// YOUR CODE HERE
+			send("Setup New User"); //print out a line telling them we are setting up a new 
+			for (int index = 0; index < this.server.getSketch().size(); index ++) {
+				Shape tmpShape = this.server.getSketch().get(index);
+				if (tmpShape != null) {
+					send(tmpShape.toString());
+				}
+			}
 
 			// Keep getting and handling messages from the client
 			// YOUR CODE HERE
