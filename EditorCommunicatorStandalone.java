@@ -20,9 +20,9 @@ public class EditorCommunicatorStandalone extends EditorCommunicator  {
 		editor.getSketch().doAddAt(idx, shape);
 		editor.repaint();
 	}
-	public int doAddEnd(Shape shape) { //
-		return editor.getSketch().doAddEnd(shape);
-	}
+//	public int doAddEnd(Shape shape) { //
+//		return editor.getSketch().doAddEnd(shape);
+//	}
 	public void doRecolor(int idx, Color c) {//
 		editor.getSketch().doRecolor(idx, c);
 		editor.repaint();

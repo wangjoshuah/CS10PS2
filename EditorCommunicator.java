@@ -54,16 +54,15 @@ public class EditorCommunicator extends Thread {
 			BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			System.out.println("...connected");
 			
-			
 			//Set message handler
 			String line;
 			while ((line = in.readLine()) != null) {
+				System.out.println("message received");
 				Message msg = new Message(line);
-//				msg.update(editor.getSketch());
-				if (msg.toString().equals("Setup New User")) {
-					editor.repaint();
-				}
+				msg.update(editor.getSketch());
 			}
+			
+			//set the out line
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -82,8 +81,8 @@ public class EditorCommunicator extends Thread {
 	}
 	public void doAddAt(int idx, Shape shape) {
 	}
-	public int doAddEnd(Shape shape) {
-		return editor.getSketch().doAddEnd(shape);
+	public void doAddEnd(Shape shape) {
+		send(shape.toString());
 	}
 	public void doRecolor(int idx, Color c) {
 	}

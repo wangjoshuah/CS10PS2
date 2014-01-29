@@ -36,11 +36,11 @@ public class SketchServerCommunicator extends Thread {
 
 			// Tell the client the current state of the world
 			// YOUR CODE HERE
-			send("Setup New User"); //print out a line telling them we are setting up a new 
+//			send("Setup New User"); //print out a line telling them we are setting up a new 
 			for (int index = 0; index < this.server.getSketch().size(); index ++) {
 				Shape tmpShape = this.server.getSketch().get(index);
 				if (tmpShape != null) {
-					send(tmpShape.toString());
+					send(tmpShape.toString() + " " + index);
 				}
 			}
 
@@ -48,18 +48,20 @@ public class SketchServerCommunicator extends Thread {
 			// YOUR CODE HERE
 			String line;
 			while( (line = in.readLine()) != null) {
+				System.out.println("stuck in while loop");
 				Message msg = new Message(line);
-//				msg.update(sketch);
-				
+				msg.update(server.getSketch());
+				server.broadcast(msg.toString());
 				// Broadcast the latest change to all clients.
 			}
+			System.out.println("exited while loop");
 
 			// Clean up -- note that also remove self from server's list so it doesn't broadcast here
 			server.removeCommunicator(this);
 			out.close();
 			in.close();
 			sock.close();
-		}
+			}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
