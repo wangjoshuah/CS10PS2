@@ -39,6 +39,13 @@ public class SketchServerCommunicator extends Thread {
 
 			// Keep getting and handling messages from the client
 			// YOUR CODE HERE
+			String line;
+			while( (line = in.readLine()) != null) {
+				Message msg = new Message(line);
+//				msg.update(sketch);
+				
+				// Broadcast the latest change to all clients.
+			}
 
 			// Clean up -- note that also remove self from server's list so it doesn't broadcast here
 			server.removeCommunicator(this);

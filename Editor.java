@@ -172,20 +172,17 @@ public class Editor extends JFrame {
 				// In drawing mode, start a new object;
 				// in editing mode, set selected according to which object contains the point
 				// YOUR CODE HERE
-				if (drawing) { //if we are in drawing mode,
-					switch (shape) { //look at the shape argument
-					case "ellipse": //if our shape is an ellipse
-						current = new Ellipse(point.x, point.y, point.x, point.y, color); //draw an ellipse
-						break;
-					case "rectangle": //if our shape is a rectangle,
-						current = new Rectangle(point.x, point.y, point.x, point.y, color); //draw a rectangle
-						break;
-					case "segment": //if our shape is a segment
-						current = new Segment(point.x, point.y, point.x, point.y, color); //draw a line segment
-					default:
-						break;
+				if(drawing) {
+					if (shape.equals("ellipse")) {
+						current = new Ellipse(point.x, point.y, point.x, point.y, color);
 					}
-					repaint(); //redraw it
+					else if (shape.equals("rectangle")) {
+						current = new Rectangle(point.x, point.y, point.x, point.y, color);
+					}
+					else if (shape.equals("segment")) {
+						current = new Segment(point.x, point.y, point.x, point.y, color);
+					}
+					repaint();
 				}
 				else if (current != null ) {
 					selected = comm.container(point.x, point.y);
