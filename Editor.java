@@ -48,6 +48,7 @@ public class Editor extends JFrame {
 		}
 		else {
 			comm = new EditorCommunicator(serverIP, this);
+//			comm.setDaemon(true); //end it if the thing ends
 			comm.start();
 		}
 

@@ -72,13 +72,13 @@ public class EditorCommunicator extends Thread {
 			System.out.println("server hung up");
 		}
 		
-		try{
-			out.close();
-			in.close();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try{
+//			out.close();
+//			in.close();
+//		}
+//		catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 	}
 
