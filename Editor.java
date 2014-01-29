@@ -173,22 +173,22 @@ public class Editor extends JFrame {
 				// in editing mode, set selected according to which object contains the point
 				// YOUR CODE HERE
 				if(drawing) {
-					if (shape.equals("ellipse")) {
+					if (shape.equals("ellipse")) { //If the string in the combo box is equal to "eclipse, set current as a new ellipse
 						current = new Ellipse(point.x, point.y, point.x, point.y, color);
 					}
-					else if (shape.equals("rectangle")) {
+					else if (shape.equals("rectangle")) { //Same as above with rectangle
 						current = new Rectangle(point.x, point.y, point.x, point.y, color);
 					}
-					else if (shape.equals("segment")) {
+					else if (shape.equals("segment")) { //Same as above with line segment
 						current = new Segment(point.x, point.y, point.x, point.y, color);
 					}
 					repaint();
 				}
-					selected = sketch.container(point.x, point.y);
-					if(selected != -1) {
-						current = sketch.get(selected);
-					}
-					repaint();
+				selected = sketch.container(point.x, point.y); //Sets selected if the current point is in the boundaries of an object
+				if(selected != -1) { //If selected is not -1, set current as the index of that object
+					current = sketch.get(selected);
+				}
+				repaint();
 			}
 
 			public void mouseReleased(MouseEvent event) {
@@ -205,12 +205,12 @@ public class Editor extends JFrame {
 				// in editing mode, move the object by the difference between the current point and the previous one
 				// YOUR CODE HERE
 				Point p2 = event.getPoint();
-				if (drawing) {
-					current.setCorners(point.x, point.y, p2.x, p2.y);
+				if (drawing) { //If drawing is true
+					current.setCorners(point.x, point.y, p2.x, p2.y); //set the boundary box of the Shape
 					repaint();
 				}
-				else if (selected != -1) {
-					current.moveBy(p2.x - point.x, p2.y - point.y);
+				else if (selected != -1) { //If drawing is not true and selected is not -1
+					current.moveBy(p2.x - point.x, p2.y - point.y); //Move the object
 					point = event.getPoint();
 					repaint();
 				}
