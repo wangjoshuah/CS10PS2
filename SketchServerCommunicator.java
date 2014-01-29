@@ -40,7 +40,7 @@ public class SketchServerCommunicator extends Thread {
 			for (int index = 0; index < this.server.getSketch().size(); index ++) {
 				Shape tmpShape = this.server.getSketch().get(index);
 				if (tmpShape != null) {
-					send(tmpShape.toString() + " " + index);
+					send("doAddAt" + tmpShape.toString() + " " + index);
 				}
 			}
 

@@ -43,12 +43,31 @@ public class Message {
 				Ellipse ellipse = new Ellipse(x1, y1, x2, y2, c); //create same ellipse in server
 				index = sketch.doAddEnd(ellipse); //add our ellipse into the server
 				break;
-
-			default:
+			case "rectangle": //if it is a rectangle
+				Rectangle rectangle = new Rectangle(x1, y1, x2, y2, c); //create same rectangle in server
+				index = sketch.doAddEnd(rectangle); //add our rectangle into the server
+				break;
+			case "segment": //if it is a lonely segment
+				Segment segment = new Segment(x1, y1, x2, y2, c); //create same segment in our server
+				index = sketch.doAddEnd(segment);
 				break;
 			}
 			break;
-
+		case "doAddAt": //add it at an index
+			switch (shape) {
+			case "ellipse": //if it is an ellipse
+				Ellipse ellipse = new Ellipse(x1, y1, x2, y2, c); //create same ellipse in client
+				sketch.doAddAt(index, ellipse); //add our ellipse into the client
+				break;
+			case "rectangle": //if it is a rectangle
+				Rectangle rectangle = new Rectangle(x1, y1, x2, y2, c); //create same rectangle in client
+				sketch.doAddAt(index, rectangle); //add our rectangle into the client
+				break;
+			case "segment": //if it is a lonely segment
+				Segment segment = new Segment(x1, y1, x2, y2, c); //create same segment in our client
+				sketch.doAddAt(index, segment); //add our segment into the client
+				break;
+			}
 		default:
 			break;
 		}
