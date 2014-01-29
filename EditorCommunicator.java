@@ -45,7 +45,6 @@ public class EditorCommunicator extends Thread {
 	 */
 	public void run() {
 		try {
-			System.out.println("just keep trying");
 			// Handle messages
 			// YOUR CODE HERE
 			// Open the socket with the server, and then the writer and reader
@@ -72,6 +71,7 @@ public class EditorCommunicator extends Thread {
 			System.out.println("server hung up");
 		}
 		
+<<<<<<< HEAD
 //		try{
 //			out.close();
 //			in.close();
@@ -79,24 +79,26 @@ public class EditorCommunicator extends Thread {
 //		catch (IOException e) {
 //			e.printStackTrace();
 //		}
+=======
+>>>>>>> 0625a9247ee467b077a940bd32ca596f4b21fbb9
 		
 	}
 
-	public void draw(Graphics g, int selected) {
-	}
-	public int container(int x, int y) {
-		return editor.getSketch().container(x, y);
-	}
+	String noShape = (null + " " + null + " ");
 	public void doAddAt(int idx, Shape shape) {
+		send("doAddAt " + shape.toString() + " " + idx); //passes a string with 8 items separated by spaces. These 8 items are passed to the Message class and read. This 
 	}
 	public void doAddEnd(Shape shape) {
 		send("doAddEnd " + shape.toString() + " -1"); //action plus shape plus index
 	}
 	public void doRecolor(int idx, Color c) {
+		send("doRecolor " + "NoShape " + "0 0 0 0 " + c.toString() + " " + Integer.toString(idx)); 
 	}
 	public void doMoveTo(int idx, int x1, int y1) {
+		send("doMoveTo " + "NoShape " + Integer.toString(x1) + " " + Integer.toString(y1) + " 0 0 NoColor " + Integer.toString(idx));
 	}
 	public void doDelete(int idx) {
+		send("doDelete " + "NoShape 0 0 0 0 NoColor "+ Integer.toString(idx));
 	}
 
 	
