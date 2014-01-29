@@ -68,6 +68,16 @@ public class Message {
 				sketch.doAddAt(index, segment); //add our segment into the client
 				break;
 			}
+		case "doRecolor": //recolor a shape
+			sketch.doRecolor(index, c);
+			break;
+		case "doDelete":
+			sketch.doDelete(index);
+			break;
+		case "doMoveTo":
+			sketch.doMoveTo(index, x1, y1);
+			
+			
 		default:
 			break;
 		}
