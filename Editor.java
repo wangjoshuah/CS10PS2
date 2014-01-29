@@ -77,6 +77,7 @@ public class Editor extends JFrame {
 		drawingB.addActionListener(new AbstractAction("drawing") {
 			public void actionPerformed(ActionEvent e) {
 				drawing = !drawing;
+				System.out.println(drawing);
 				current = null;
 			}
 		});
@@ -171,17 +172,20 @@ public class Editor extends JFrame {
 				// In drawing mode, start a new object;
 				// in editing mode, set selected according to which object contains the point
 				// YOUR CODE HERE
-				if(drawing && shape == "ellipse") {
-					current = new Ellipse(point.x, point.y, point.x, point.y, color);
-					repaint();
-				}
-				if(drawing && shape == "rectangle") {
-					current = new Rectangle(point.x, point.y, point.x, point.y, color);
-					repaint();
-				}
-				if(drawing && shape == "segment") {
-					current = new Segment(point.x, point.y, point.x, point.y, color);
-					repaint();
+				if (drawing) { //if we are in drawing mode,
+					switch (shape) { //look at the shape argument
+					case "ellipse": //if our shape is an ellipse
+						current = new Ellipse(point.x, point.y, point.x, point.y, color); //draw an ellipse
+						break;
+					case "rectangle": //if our shape is a rectangle,
+						current = new Rectangle(point.x, point.y, point.x, point.y, color); //draw a rectangle
+						break;
+					case "segment": //if our shape is a segment
+						current = new Segment(point.x, point.y, point.x, point.y, color); //draw a line segment
+					default:
+						break;
+					}
+					repaint(); //redraw it
 				}
 				else if (current != null ) {
 					selected = comm.container(point.x, point.y);
